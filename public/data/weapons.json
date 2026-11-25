@@ -1,0 +1,15 @@
+{
+  "startingMoney": 800,
+  "weapons": [
+    { "id": "p2000", "name": "P2000", "price": 0, "damage": 25, "magazine": 13, "reserve": 52, "fireRate": 0.15, "spread": 0.02, "reloadTime": 1150 },
+    { "id": "glock", "name": "Glock-18", "price": 100, "damage": 22, "magazine": 20, "reserve": 80, "fireRate": 0.12, "spread": 0.015, "reloadTime": 1000 },
+    { "id": "deagle", "name": "Desert Eagle", "price": 400, "damage": 65, "magazine": 7, "reserve": 35, "fireRate": 0.4, "spread": 0.01, "reloadTime": 1500 },
+    { "id": "mp5", "name": "MP5-SD", "price": 800, "damage": 18, "magazine": 30, "reserve": 120, "fireRate": 0.08, "spread": 0.04, "reloadTime": 1800 },
+    { "id": "p90", "name": "P90", "price": 1200, "damage": 15, "magazine": 50, "reserve": 100, "fireRate": 0.07, "spread": 0.05, "reloadTime": 2000 },
+    { "id": "nova", "name": "Nova", "price": 600, "damage": 20, "pellets": 9, "magazine": 8, "reserve": 32, "fireRate": 0.8, "spread": 0.15, "reloadTime": 3000 },
+    { "id": "xm1014", "name": "XM1014", "price": 1000, "damage": 15, "pellets": 6, "magazine": 7, "reserve": 32, "fireRate": 0.3, "spread": 0.12, "reloadTime": 2500 },
+    { "id": "ak47", "name": "AK-47", "price": 1500, "damage": 42, "magazine": 30, "reserve": 90, "fireRate": 0.1, "spread": 0.035, "reloadTime": 2400 },
+    { "id": "m4a4", "name": "M4A4", "price": 1700, "damage": 32, "magazine": 30, "reserve": 90, "fireRate": 0.09, "spread": 0.025, "reloadTime": 2200 },
+    { "id": "awp", "name": "AWP (Снайперка)", "price": 2500, "damage": 115, "magazine": 5, "reserve": 30, "fireRate": 1.5, "spread": 0.001, "reloadTime": 2600 }
+  ]
+}

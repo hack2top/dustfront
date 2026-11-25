@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{font-family:Manrope,Arial,sans-serif;color:#f0eee5;background:#10120f;}*{box-sizing:border-box}html,body,#app{width:100%;height:100%;margin:0;overflow:hidden}body{background:#10120f}#game{position:absolute;inset:0;width:100%;height:100%;display:block;outline:0}button,select,input{font:inherit}button{cursor:pointer} 
+.screen{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-start;padding:5vw;background:linear-gradient(90deg,rgba(13,15,13,.95) 0%,rgba(13,15,13,.83) 34%,rgba(13,15,13,.24) 72%,rgba(13,15,13,.2))}
+.hidden{display:none!important}
+.menu-panel{width:min(510px,95vw);padding:36px 40px;background:rgba(19,22,19,.88);border:1px solid rgba(237,223,192,.14);backdrop-filter:blur(16px)}
+.brand{display:flex;gap:14px;align-items:center;margin-bottom:20px}.brand-mark{display:grid;place-items:center;width:48px;height:48px;background:#d8a45e;color:#171713;font:900 30px 'Barlow Condensed',sans-serif;clip-path:polygon(0 0,100% 0,100% 74%,74% 100%,0 100%)}.brand h1{margin:0;font:800 36px/.95 'Barlow Condensed',sans-serif;letter-spacing:1.7px}.brand small{font-size:9px;letter-spacing:2.5px;color:#c2a976;font-weight:800}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:15px}.form-grid label{display:grid;gap:7px;color:#888b80;text-transform:uppercase;font-size:9px;font-weight:800;}
+.form-grid select,.custom-input{width:100%;padding:12px;border:1px solid #34382f;background:#20231e;color:#ede9db;outline:none}
+.primary{height:48px;width:100%;margin-top:10px;border:0;background:#d0a05c;color:#171713;font-weight:900;font-size:11px;letter-spacing:1.6px;transition:background .15s}.primary:hover{background:#e2b873}
+.back-btn{background:none;border:none;color:#888;margin-top:15px;font-size:12px;text-decoration:underline;}
+.topbar{position:absolute;top:0;left:0;width:100%;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;background:linear-gradient(180deg,#10120fe8,#10120f00)}.round-tag,.objective,.alive-count{font-size:10px;letter-spacing:1.5px;font-weight:800;color:#b5b4a8}
+.bottom-left{position:absolute;left:28px;bottom:30px;width:190px}.stat{display:flex;gap:8px;align-items:baseline}.stat span{font-size:8px;color:#9a9b8e;font-weight:800}.stat b{font:700 21px 'Barlow Condensed',sans-serif}
+.health-bar{height:4px;background:#44483d;margin-top:4px}.health-bar i{display:block;height:100%;background:#b4b573;transition:width .2s}
+.bottom-right{position:absolute;right:30px;bottom:26px;text-align:right}.money{font-size:10px;color:#b4b29f}.weapon-name{font:700 25px 'Barlow Condensed',sans-serif;margin-top:9px}.ammo{font:700 22px 'Barlow Condensed',sans-serif}
+.shop-button{position:absolute;right:28px;top:76px;border:1px solid #d0a05c88;background:#20231ebf;color:#e4d4b0;padding:10px 12px;font-size:9px;font-weight:800}
+.overlay{position:absolute;inset:0;background:#10120fe8;display:grid;place-items:center}.shop-panel{width:min(790px,94vw);padding:30px 34px;background:#191c18;border:1px solid #3d4036}.shop-head{display:flex;justify-content:space-between;align-items:end;padding-bottom:18px;border-bottom:1px solid #35382f}.shop-head h2{font:800 34px 'Barlow Condensed',sans-serif;margin:0}
+.shop-items{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:17px;max-height:50vh;overflow-y:auto}
+.weapon-card{position:relative;min-height:107px;padding:12px;text-align:left;border:1px solid #35392f;background:#20231e;color:#eae7dd}.weapon-card:hover{border-color:#d0a05c;background:#292b23}.weapon-card:disabled{opacity:.45;cursor:not-allowed}.weapon-card strong{display:block;margin:8px 0 3px;font:700 18px 'Barlow Condensed',sans-serif}.weapon-card small{font-size:9px;color:#a1a194}.weapon-card .price{position:absolute;top:11px;right:11px;font-size:9px;color:#dfc98d;font-weight:800}
+.result-panel{width:min(420px,92vw);padding:36px;background:#191c18;border:1px solid #44463a;text-align:center}.result-panel h2{font-size:52px;margin:10px 0;color:#dfbd7e}
+.toast{position:absolute;top:75px;left:50%;transform:translateX(-50%);background:#171b17eb;border:1px solid #a58a58;color:#e1d5b7;padding:10px 16px;font-size:10px}
+#crosshair{position:absolute;left:50%;top:50%;width:16px;height:16px;transform:translate(-50%,-50%);pointer-events:none}
+#crosshair i{position:absolute;display:block;background:#f3f1df}
+#crosshair i:nth-child(1){width:2px;height:5px;top:0;left:7px}#crosshair i:nth-child(2){width:2px;height:5px;bottom:0;left:7px}#crosshair i:nth-child(3){width:5px;height:2px;left:0;top:7px}#crosshair i:nth-child(4){width:5px;height:2px;right:0;top:7px}
+#hitmarker{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#ff3333;font-size:18px;font-weight:bold;opacity:0;transition:opacity .1s ease;pointer-events:none;text-shadow:0 0 2px #000;}
+#hitmarker.active{opacity:1;}
+.hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-size:10px;color:#a9a89d}

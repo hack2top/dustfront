@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#10120f" />
+    <meta name="description" content="Dustfront — тактический шутер с ботами и мультиплеером." />
+    <title>Dustfront — Tactical Arena</title>
+    <!-- Подключаем PeerJS для мультиплеера -->
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    <script type="module" crossorigin src="./assets/index-Dd7IAjGj.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-hSGnLNw6.css">
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="game"></canvas>
+      
+      <!-- ================= ГЛАВНОЕ МЕНЮ ================= -->
+      <div id="menu" class="screen">
+        <div class="menu-panel">
+          <div class="brand">
+            <span class="brand-mark">D</span>
+            <div>
+              <small>TACTICAL ARENA</small>
+              <h1>DUSTFRONT</h1>
+            </div>
+          </div>
+          
+          <!-- Главные кнопки -->
+          <div id="main-menu-buttons">
+            <button id="btn-single" class="primary">ОДИНОЧНАЯ ИГРА <span>→</span></button>
+            <button id="btn-multi" class="primary" style="margin-top:10px; background:#475b63; color:#fff;">МУЛЬТИПЛЕЕР <span>🌐</span></button>
+          </div>
+
+          <!-- Настройки одиночной игры -->
+          <div id="single-settings" class="hidden">
+            <div class="form-grid">
+              <label>Сторона
+                <select id="side">
+                  <option value="blue">Спецназ</option>
+                  <option value="gold">Террористы</option>
+                </select>
+              </label>
+              <label>Боты-враги
+                <select id="enemy-count">
+                  <option>2</option>
+                  <option selected>4</option>
+                  <option>6</option>
+                </select>
+              </label>
+              <label>Союзники
+                <select id="ally-count">
+                  <option>0</option>
+                  <option selected>2</option>
+                  <option>4</option>
+                </select>
+              </label>
+              <label>Сложность
+                <select id="difficulty">
+                  <option value="easy">Новичок</option>
+                  <option value="normal" selected>Боец</option>
+                  <option value="hard">Ветеран</option>
+                </select>
+              </label>
+              <label style="grid-column: 1 / -1;">Формат матча
+                <select id="rounds">
+                  <option value="1">До 1 победы (BO1)</option>
+                  <option value="3" selected>До 3 побед (BO3)</option>
+                  <option value="5">До 5 побед (BO5)</option>
+                  <option value="10">До 10 побед (BO19)</option>
+                </select>
+              </label>
+            </div>
+            <button id="start" class="primary" style="margin-top:15px;">НАЧАТЬ МАТЧ <span>→</span></button>
+            <button class="back-btn" onclick="document.getElementById('single-settings').classList.add('hidden');document.getElementById('main-menu-buttons').classList.remove('hidden')">Назад</button>
+          </div>
+
+          <!-- Настройки мультиплеера -->
+          <div id="multi-settings" class="hidden">
+            <label style="display:block;margin-bottom:10px;color:#aaa;font-size:12px;">Ваш никнейм:</label>
+            <input type="text" id="player-nick" class="custom-input" placeholder="Введите ник..." value="Игрок">
+            
+            <div style="display:flex; gap:10px; margin-top:15px;">
+              <button id="btn-create-room" class="primary" style="flex:1;">СОЗДАТЬ</button>
+              <button id="btn-join-room" class="primary" style="flex:1; background:#475b63;">ВОЙТИ</button>
+            </div>
+
+            <!-- Блок ввода кода -->
+            <div id="room-connect" class="hidden" style="margin-top:15px;">
+              <input type="text" id="room-code-input" class="custom-input" placeholder="Код комнаты...">
+              <button id="btn-connect-submit" class="primary" style="margin-top:10px;">ПОДКЛЮЧИТЬСЯ</button>
+            </div>
+
+            <!-- Блок хоста комнаты -->
+            <div id="room-host" class="hidden" style="margin-top:15px;">
+              <p style="color:#aaa;font-size:12px;margin:0 0 5px 0;">Код комнаты (передайте другу):</p>
+              <div id="my-room-code" style="font-size:24px; font-weight:bold; color:#d0a05c; text-align:center; padding:10px; background:#20231e; border:1px solid #35392f;">...</div>
+              <p style="color:#aaa;font-size:12px;margin:15px 0 5px 0;">Выберите команду:</p>
+              <div style="display:flex; gap:10px;">
+                <button class="team-select primary" data-team="blue" style="flex:1;">СПЕЦНАЗ</button>
+                <button class="team-select primary" data-team="gold" style="flex:1; background:#756044;">ТЕРРОРИСТЫ</button>
+              </div>
+            </div>
+
+            <button class="back-btn" onclick="document.getElementById('multi-settings').classList.add('hidden');document.getElementById('main-menu-buttons').classList.remove('hidden')">Назад</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= HUD (Интерфейс в игре) ================= -->
+      <div id="hud" class="hidden">
+        <!-- Верхняя панель -->
+        <div class="topbar">
+          <div class="round-tag">РАУНД <b id="round-num">1</b> | СЧЕТ: <b id="score">0:0</b></div>
+          <div class="objective"><span class="live-dot"></span> УСТРАНИТЕ ПРОТИВНИКОВ</div>
+          <div id="alive" class="alive-count">0 : 0</div>
+        </div>
+
+        <!-- Прицел и Хитмаркер -->
+        <div id="crosshair">
+          <i></i><i></i><i></i><i></i>
+          <div id="hitmarker">✕</div>
+        </div>
+
+        <!-- Здоровье (Брони нет) -->
+        <div class="bottom-left">
+          <div class="stat"><span>ЗДОРОВЬЕ</span><b id="health">100</b></div>
+          <div class="health-bar"><i id="health-fill"></i></div>
+        </div>
+
+        <!-- Оружие и Патроны -->
+        <div class="bottom-right">
+          <div class="money">$ <b id="money">800</b></div>
+          <div class="weapon-name" id="weapon-name">P2000</div>
+          <div class="ammo"><b id="ammo">13</b> <span>/ <i id="reserve">52</i></span></div>
+          <div class="ammo-label">ПАТРОНЫ</div>
+        </div>
+
+        <div class="hint">B — магазин <span>·</span> R — перезарядка <span>·</span> ПКМ — прицел <span>·</span> Space — прыжок</div>
+        <button id="shop-open" class="shop-button">B&nbsp; МАГАЗИН</button>
+      </div>
+
+      <!-- ================= МАГАЗИН ================= -->
+      <div id="shop" class="overlay hidden">
+        <div class="shop-panel">
+          <div class="shop-head">
+            <div><small>ЭКИПИРОВКА</small><h2>АРСЕНАЛ</h2></div>
+            <div class="shop-money">БАЛАНС <b>$ <span id="shop-money">800</span></b></div>
+          </div>
+          <div id="shop-items" class="shop-items"></div>
+          <button id="shop-close" class="primary">В БОЙ <span>↵</span></button>
+        </div>
+      </div>
+      
+      <!-- ================= КОНЕЦ МАТЧА ================= -->
+      <div id="result" class="screen hidden">
+        <div class="result-panel">
+          <small>МАТЧ ЗАВЕРШЁН</small>
+          <h2 id="result-title">ПОБЕДА</h2>
+          <p id="result-subtitle"></p>
+          <button id="restart" class="primary">В ГЛАВНОЕ МЕНЮ <span>↻</span></button>
+        </div>
+      </div>
+
+      <!-- Уведомления -->
+      <div id="toast" class="toast hidden"></div>
+    </div>
+
+    <!-- Подключение главного скрипта -->
+  </body>
+</html>
